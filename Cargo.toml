@@ -1,0 +1,22 @@
+[package]
+name = "gadescriptor"
+version = "0.1.0"
+authors = ["Alekos Filini <alekos.filini@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bitcoin = "0.23"
+fastpbkdf2 = "^0.1"
+hmac = "^0.7"
+sha2 = "^0.8"
+bip0039 = "^0.6"
+lazy_static = "1.4"
+clap = "~2.33"
+
+[dependencies.magical-bitcoin-wallet]
+git = "https://github.com/MagicalBitcoin/magical-bitcoin-wallet.git"
+rev = "4f865ab"
+default-features = false
+features = ["minimal"]
