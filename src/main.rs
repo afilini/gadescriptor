@@ -142,10 +142,10 @@ fn main() {
     stdin().read_line(&mut mnemonic).unwrap();
 
     let watch_only = matches.is_present("watch_only");
-    let service = if matches.is_present("mainnet") {
-        GA_MAINNET.deref()
+    let (network, service) = if matches.is_present("mainnet") {
+        (Network::Bitcoin, GA_MAINNET.deref())
     } else {
-        GA_TESTNET.deref()
+        (Network::Testnet, GA_TESTNET.deref())
     };
     let subaccount: Option<u16> = matches
         .value_of("subaccount")
@@ -154,7 +154,7 @@ fn main() {
     let mnemonic_bip39 = Mnemonic::from_phrase(mnemonic.trim(), Language::English).unwrap();
     let seed = Seed::new(&mnemonic_bip39, "");
     let seed_bytes: &[u8] = seed.as_bytes();
-    let xprv = ExtendedPrivKey::new_master(Network::Testnet, seed_bytes).unwrap();
+    let xprv = ExtendedPrivKey::new_master(network, seed_bytes).unwrap();
 
     let gait_path = gait_path_from_seed(&xprv);
     let derived_service_xpub = derive_ga_xpub(gait_path, subaccount, service);
@@ -165,13 +165,8 @@ fn main() {
     );
 
     if watch_only {
-        let wallet: OfflineWallet<MemoryDatabase> = Wallet::new_offline(
-            &descriptor_str,
-            None,
-            Network::Testnet,
-            MemoryDatabase::new(),
-        )
-        .unwrap();
+        let wallet: OfflineWallet<MemoryDatabase> =
+            Wallet::new_offline(&descriptor_str, None, network, MemoryDatabase::new()).unwrap();
         println!(
             "Watch-only descriptor: {}",
             wallet
