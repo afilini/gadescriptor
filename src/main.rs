@@ -131,7 +131,7 @@ fn main() {
         (@arg watch_only: -w --watch_only "Returns the public version of the descriptor")
         (@arg testnet: -t --testnet conflicts_with[mainnet] "Use the testnet network (default)")
         (@arg mainnet: -m --mainnet conflicts_with[testnet] "Use the mainnet network")
-        // (@arg subaccount: -s --subaccount_index +takes_value "Returns the descriptor for a subaccount index instead of the main account") TODO: more testing
+        (@arg subaccount: -s --subaccount_index +takes_value "Returns the descriptor for a subaccount index instead of the main account")
     )
     .get_matches();
 
@@ -159,9 +159,14 @@ fn main() {
     let gait_path = gait_path_from_seed(&xprv);
     let derived_service_xpub = derive_ga_xpub(gait_path, subaccount, service);
 
+    let extra_path = match subaccount {
+        None => "".to_string(),
+        Some(pointer) => format!("3'/{}'/", pointer),
+    };
+
     let descriptor_str = format!(
-        "sh(wsh(thresh_m(2,{}/*,{}/1/*)))",
-        derived_service_xpub, xprv
+        "sh(wsh(multi(2,{}/*,{}/{}1/*)))",
+        derived_service_xpub, xprv, extra_path
     );
 
     if watch_only {

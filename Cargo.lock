@@ -32,12 +32,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "base64"
-version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b41b7ea54a0c9d92199de89e20e58d49f02f8e699814ef3fdf266f6f748d15c7"
-
-[[package]]
 name = "bech32"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -116,6 +110,12 @@ name = "byteorder"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a7c3dd8985a7111efc5c80b44e23ecdd8c007de8ade3b96595387e812b957cf5"
+
+[[package]]
+name = "bytes"
+version = "0.5.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0e4cec68f03f32e44924783795810fa50a7035d8c8ebe78580ad7e6c703fba38"
 
 [[package]]
 name = "c2-chacha"
@@ -289,22 +289,33 @@ dependencies = [
 [[package]]
 name = "magical-bitcoin-wallet"
 version = "0.1.0"
-source = "git+https://github.com/MagicalBitcoin/magical-bitcoin-wallet.git?rev=4f865ab#4f865ab2c06710a682990c67683efe20b7189993"
+source = "git+https://github.com/MagicalBitcoin/magical-bitcoin-wallet.git?rev=5683a83#5683a832880e06ff626743fcb2abf653bb86bd4c"
 dependencies = [
  "async-trait",
- "base64",
  "bitcoin",
  "log",
+ "magical-macros",
  "miniscript",
  "serde",
  "serde_json",
+ "tokio",
+]
+
+[[package]]
+name = "magical-macros"
+version = "0.1.0"
+source = "git+https://github.com/MagicalBitcoin/magical-bitcoin-wallet.git?rev=5683a83#5683a832880e06ff626743fcb2abf653bb86bd4c"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
 name = "miniscript"
-version = "0.12.0"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4656dd1f35c3192c4056f48c80eab67ddfb6222cc5525f1df5f880dc055fca75"
+checksum = "58f196216a07ade53d91a263b3721057f1f0cfd6f95f3d324626f3f9cf7cdfce"
 dependencies = [
  "bitcoin",
 ]
@@ -324,6 +335,12 @@ dependencies = [
  "byteorder",
  "crypto-mac",
 ]
+
+[[package]]
+name = "pin-project-lite"
+version = "0.1.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "282adbf10f2698a7a77f8e983a74b2d18176c19a7fd32a45446139ae7b02b715"
 
 [[package]]
 name = "ppv-lite86"
@@ -488,6 +505,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d326610f408c7a4eb6f51c37c330e496b08506c9457c9d34287ecc38809fb060"
 dependencies = [
  "unicode-width",
+]
+
+[[package]]
+name = "tokio"
+version = "0.2.22"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5d34ca54d84bf2b5b4d7d31e901a8464f7b60ac145a284fba25ceb801f2ddccd"
+dependencies = [
+ "bytes",
+ "pin-project-lite",
 ]
 
 [[package]]

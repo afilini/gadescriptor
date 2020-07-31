@@ -17,6 +17,6 @@ clap = "~2.33"
 
 [dependencies.magical-bitcoin-wallet]
 git = "https://github.com/MagicalBitcoin/magical-bitcoin-wallet.git"
-rev = "4f865ab"
+rev = "5683a83"
 default-features = false
 features = ["minimal"]
